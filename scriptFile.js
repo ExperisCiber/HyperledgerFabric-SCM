@@ -89,60 +89,60 @@ function setup(setup) {
     var shipperAddress = factory.newConcept(NS, 'Address');
     shipperAddress.country = 'Panama';
     shipper.address = shipperAddress;
-    shipper.accountBalance = 0;
+    shipper.accountBalance = 1000;
   
   // create the supermarket
     var supermarket = factory.newResource(NS, 'Supermarket', 'supermarket@email.com');
     var supermarketAddress = factory.newConcept(NS, 'Address');
     supermarketAddress.country = 'Holland';
     supermarket.address = supermarketAddress;
-    supermarket.accountBalance = 0;
+    supermarket.accountBalance = 1000;
   
   // create the quality inspector
     var qualityInspector = factory.newResource(NS, 'QualityInspector', 'qualityinspector@email.com');
     var qualityInspectorAddress = factory.newConcept(NS, 'Address');
     qualityInspectorAddress.country = 'Holland';
     qualityInspector.address = qualityInspectorAddress;
-    qualityInspector.accountBalance = 0;
+    qualityInspector.accountBalance = 1000;
   
   // create the customs
     var customs = factory.newResource(NS, 'Customs', 'customs@email.com');
     var customsAddress = factory.newConcept(NS, 'Address');
     customsAddress.country = 'Holland';
     customs.address = customsAddress;
-    customs.accountBalance = 0;
+    customs.accountBalance = 1000;
  
   // create the consumer
   var consumer = factory.newResource(NS, 'Consumer', 'consumer@email.com');
     var consumerAddress = factory.newConcept(NS, 'Address');
     consumerAddress.country = 'Holland';
     consumer.address = consumerAddress;
-    consumer.accountBalance = 0;
+    consumer.accountBalance = 1000;
   
     // create a contract
-    var contract = factory.newResource(NS, 'Contract', 'CON_001');
-    contract.grower = factory.newRelationship(NS, 'Grower', 'grower@email.com');
-    contract.importer = factory.newRelationship(NS, 'Importer', 'importer@email.com');
-    contract.shipper = factory.newRelationship(NS, 'Shipper', 'shipper@email.com');
-    var date = new Date();
-  	date.setDate(date.getDate() + 1);
-    contract.arrivalDateTime = date;
-    contract.unitPrice = 0.5;
-    contract.minTemperature = 2;
-    contract.maxTemperature = 10;
-    contract.minPenaltyFactor = 0.2; // we reduce the price by XX cents for every degree below the min temp
-    contract.maxPenaltyFactor = 0.1;// we reduce the price by XX cents for every degree above the max temp
+    //var contract = factory.newResource(NS, 'Contract', 'CON_001');
+    //contract.grower = factory.newRelationship(NS, 'Grower', 'grower@email.com');
+    //contract.importer = factory.newRelationship(NS, 'Importer', 'importer@email.com');
+    //contract.shipper = factory.newRelationship(NS, 'Shipper', 'shipper@email.com');
+    //var date = new Date();
+  	//date.setDate(date.getDate() + 1);
+    //contract.arrivalDateTime = date;
+    //contract.unitPrice = 0.5;
+    //contract.minTemperature = 2;
+    //contract.maxTemperature = 10;
+    //contract.minPenaltyFactor = 0.2; // we reduce the price by XX cents for every degree below the min temp
+    //contract.maxPenaltyFactor = 0.1;// we reduce the price by XX cents for every degree above the max temp
   
   // create a production lot
-    var productionLot = factory.newResource(NS, 'ProductionLot', 'LOT_001');
-    productionLot.grower = factory.newRelationship(NS, 'Grower', 'grower@email.com');
-    productionLot.productType = 'BANANAS';
-  	var expDate = new Date();
-  	expDate.setDate(expDate.getDate() + 10);
-  	productionLot.expirationDate = expDate;
-    productionLot.quantity = 1000;
-    productionLot.contract = factory.newRelationship(NS, 'Contract', 'CON_001');
-  	productionLot.shipmentStatus = 'CREATED';
+    //var productionLot = factory.newResource(NS, 'ProductionLot', 'LOT_001');
+    //productionLot.grower = factory.newRelationship(NS, 'Grower', 'grower@email.com');
+    //productionLot.productType = 'BANANAS';
+  	//var expDate = new Date();
+  	//expDate.setDate(expDate.getDate() + 10);
+  	//productionLot.expirationDate = expDate;
+    //productionLot.quantity = 1000;
+    //productionLot.contract = factory.newRelationship(NS, 'Contract', 'CON_001');
+  	//productionLot.shipmentStatus = 'CREATED';
  
     return getParticipantRegistry(NS + '.Grower')
         .then(function (growerRegistry) {
@@ -190,21 +190,21 @@ function setup(setup) {
   .then(function(customsRegistry) {
       // add the customs
     return customsRegistry.addAll([customs]);
-    })
-  .then(function() { 
-    return getAssetRegistry(NS + '.Contract')
-    })
-      .then(function(contractRegistry) {
-            // add the contract
-            return contractRegistry.addAll([contract]);
-        })
-        .then(function() {
-    return getAssetRegistry(NS + '.ProductionLot')
-    })
-        .then(function(productionLotRegistry) {
-            // add the production lot
-            return productionLotRegistry.addAll([productionLot]);
-        });
+    });
+  //.then(function() { 
+    //return getAssetRegistry(NS + '.Contract')
+    //})
+  //.then(function(contractRegistry) {
+    // add the contract
+    //return contractRegistry.addAll([contract]);
+    //})
+  //.then(function() {
+    //return getAssetRegistry(NS + '.ProductionLot')
+    //})
+  //.then(function(productionLotRegistry) {
+    // add the production lot
+    //return productionLotRegistry.addAll([productionLot]);
+    //});
 }
  
  
@@ -416,8 +416,9 @@ function createBatch(CreateBatch) {
   // Step 2: Create batch
   var factory = getFactory();
   var NS = 'org.acme.shipping.perishable';
-  var batch = factory.newResource(NS, 'Batch', 'BAT_001');
+  var batch = factory.newResource(NS, 'Batch', CreateBatch.batchId);
   batch.quantity = CreateBatch.quantity;
+  batch.soldQuantity = CreateBatch.soldQuantity;
   batch.productionLot = productionLot;
   
   return getAssetRegistry('org.acme.shipping.perishable.ProductionLot')
