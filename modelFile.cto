@@ -67,6 +67,7 @@ transaction CreateProductionLot {
   --> Grower grower 
   o String productionLotId
   o ProductType productType
+  o DateTime expirationDate 
   o Long quantity 
   --> Contract contract 
 }
@@ -127,6 +128,7 @@ transaction PurchaseBatch extends BatchTransaction {
 transaction CreateBatch extends ProductionLotTransaction { 
   o String batchId
   o Long quantity 
+  o Long soldQuantity
 } 
  
 /** 
