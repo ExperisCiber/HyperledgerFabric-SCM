@@ -120,29 +120,29 @@ function setup(setup) {
     consumer.accountBalance = 1000;
   
     // create a contract
-    //var contract = factory.newResource(NS, 'Contract', 'CON_001');
-    //contract.grower = factory.newRelationship(NS, 'Grower', 'grower@email.com');
-    //contract.importer = factory.newRelationship(NS, 'Importer', 'importer@email.com');
-    //contract.shipper = factory.newRelationship(NS, 'Shipper', 'shipper@email.com');
-    //var date = new Date();
-  	//date.setDate(date.getDate() + 1);
-    //contract.arrivalDateTime = date;
-    //contract.unitPrice = 0.5;
-    //contract.minTemperature = 2;
-    //contract.maxTemperature = 10;
-    //contract.minPenaltyFactor = 0.2; // we reduce the price by XX cents for every degree below the min temp
-    //contract.maxPenaltyFactor = 0.1;// we reduce the price by XX cents for every degree above the max temp
+    var contract = factory.newResource(NS, 'Contract', 'CON_001');
+    contract.grower = factory.newRelationship(NS, 'Grower', 'grower@email.com');
+    contract.importer = factory.newRelationship(NS, 'Importer', 'importer@email.com');
+    contract.shipper = factory.newRelationship(NS, 'Shipper', 'shipper@email.com');
+    var date = new Date();
+  	date.setDate(date.getDate() + 1);
+    contract.arrivalDateTime = date;
+    contract.unitPrice = 0.5;
+    contract.minTemperature = 2;
+    contract.maxTemperature = 10;
+    contract.minPenaltyFactor = 0.2; // we reduce the price by XX cents for every degree below the min temp
+    contract.maxPenaltyFactor = 0.1;// we reduce the price by XX cents for every degree above the max temp
   
   // create a production lot
-    //var productionLot = factory.newResource(NS, 'ProductionLot', 'LOT_001');
-    //productionLot.grower = factory.newRelationship(NS, 'Grower', 'grower@email.com');
-    //productionLot.productType = 'BANANAS';
-  	//var expDate = new Date();
-  	//expDate.setDate(expDate.getDate() + 10);
-  	//productionLot.expirationDate = expDate;
-    //productionLot.quantity = 1000;
-    //productionLot.contract = factory.newRelationship(NS, 'Contract', 'CON_001');
-  	//productionLot.shipmentStatus = 'CREATED';
+    var productionLot = factory.newResource(NS, 'ProductionLot', 'LOT_001');
+    productionLot.grower = factory.newRelationship(NS, 'Grower', 'grower@email.com');
+    productionLot.productType = 'BANANAS';
+  	var expDate = new Date();
+  	expDate.setDate(expDate.getDate() + 10);
+  	productionLot.expirationDate = expDate;
+    productionLot.quantity = 1000;
+    productionLot.contract = factory.newRelationship(NS, 'Contract', 'CON_001');
+  	productionLot.shipmentStatus = 'CREATED';
  
     return getParticipantRegistry(NS + '.Grower')
         .then(function (growerRegistry) {
@@ -190,21 +190,21 @@ function setup(setup) {
   .then(function(customsRegistry) {
       // add the customs
     return customsRegistry.addAll([customs]);
-    });
-  //.then(function() { 
-    //return getAssetRegistry(NS + '.Contract')
-    //})
-  //.then(function(contractRegistry) {
-    // add the contract
-    //return contractRegistry.addAll([contract]);
-    //})
-  //.then(function() {
-    //return getAssetRegistry(NS + '.ProductionLot')
-    //})
-  //.then(function(productionLotRegistry) {
-    // add the production lot
-    //return productionLotRegistry.addAll([productionLot]);
-    //});
+    })
+  .then(function() { 
+    return getAssetRegistry(NS + '.Contract')
+    })
+      .then(function(contractRegistry) {
+            // add the contract
+            return contractRegistry.addAll([contract]);
+        })
+        .then(function() {
+    return getAssetRegistry(NS + '.ProductionLot')
+    })
+        .then(function(productionLotRegistry) {
+            // add the production lot
+            return productionLotRegistry.addAll([productionLot]);
+        });
 }
  
  
